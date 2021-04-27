@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PublisherService.Services.Interfaces;
+using PublisherService.Services;
 
 namespace PublisherService
 {
@@ -32,6 +34,9 @@ namespace PublisherService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PublisherService", Version = "v1" });
             });
+
+            services.AddScoped<IRedisPublisher, RedisPublisher>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +48,6 @@ namespace PublisherService
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublisherService v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
