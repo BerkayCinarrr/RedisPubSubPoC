@@ -14,12 +14,7 @@ namespace PublisherService.Services
 
             try
             {
-                var redis = RedisStore.RedisCache;
-                            
-                //create a publisher
-                var pub = redis.Multiplexer.GetSubscriber();
-                
-                //pubish to test channel a message
+                var pub = RedisStore.RedisCache.Multiplexer.GetSubscriber();
                 var count = await pub.PublishAsync("testChannel", $"Date: {DateTime.UtcNow} : Message : {msg}");
                 Console.WriteLine($"Number of listeners for test {count}");
 

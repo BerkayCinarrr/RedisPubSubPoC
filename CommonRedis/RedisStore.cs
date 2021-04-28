@@ -4,7 +4,7 @@ using System.Net;
 
 namespace CommonRedis
 {
-public class RedisStore
+    public class RedisStore
     {
         private static readonly Lazy<ConnectionMultiplexer> LazyConnection;
 
@@ -12,8 +12,9 @@ public class RedisStore
         {
             var configurationOptions = new ConfigurationOptions
             {
-                 EndPoints = {
-                    new DnsEndPoint("redis", 6379),
+                 EndPoints = 
+                {
+                    new DnsEndPoint("redis", 6379), //TODO configurable
                     //new IPEndPoint(host, port), // <== or this if 'host' is an IPAddress
                 },
                 //ResolveDns = true,
@@ -21,7 +22,6 @@ public class RedisStore
                 //KeepAlive = 180,
                 //ConnectTimeout = 10000,
             };
-
             LazyConnection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(configurationOptions));
         }
 

@@ -21,7 +21,7 @@ namespace PublisherService.Controllers
         [HttpPost]
         public async Task<IActionResult> Publish([FromBody] RedisPublish data)
         {
-            return Ok(await _redisPublisher.Publish(data.msg));
+            return Ok(await _redisPublisher.Publish(data.message));
         }
 
     }

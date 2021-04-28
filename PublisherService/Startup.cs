@@ -35,7 +35,7 @@ namespace PublisherService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PublisherService", Version = "v1" });
             });
 
-            services.AddScoped<IRedisPublisher, RedisPublisher>();
+            services.AddTransient<IRedisPublisher, RedisPublisher>();
 
         }
 

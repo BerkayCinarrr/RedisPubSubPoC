@@ -23,28 +23,23 @@ namespace SubscriberWorker
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+
+                try
+                {                                
+                    var sub = RedisStore.RedisCache.Multiplexer.GetSubscriber();       
+                    await sub.SubscribeAsync("testChannel", (channel, message) =>  //new RedisChannel("b*c", RedisChannel.PatternMode.Pattern)
+                    {
+                        Console.WriteLine("Got notification: " + (string)message);
+                        Console.ReadKey();
+                        //do stuff
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Redis Publish Exception: {ex.Message}");
+                }
+
                 await Task.Delay(10000, stoppingToken);
-
-            try
-            {
-                var redis = RedisStore.RedisCache;
-                            
-                //create a publisher
-                var sub = redis.Multiplexer.GetSubscriber();       
-
-                //sub to test channel a message
-                await sub.SubscribeAsync("testChannel", (channel, message) => {
-                    Console.WriteLine("Got notification: " + (string)message);
-                    //do stuff
-                    Console.Read();
-                });
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Redis Publish Exception: {ex.Message}");
-            }
-
             }
         }
     }
