@@ -6,4 +6,4 @@
 > $ docker compose up
 
 [HttpPost] http://localhost:8000/publish/
-{"message" : "ddd" }
+  {"message" : "HELLO" }
